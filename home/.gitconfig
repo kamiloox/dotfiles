@@ -1,0 +1,12 @@
+[user]
+  name = Kamil Troczewski
+  email = kamiltroczewski@gmail.com
+
+[core]
+  editor = nvim
+
+[init]
+  defaultBranch = master
+
+[pull]
+  rebase = true

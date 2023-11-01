@@ -1,0 +1,9 @@
+- hosts: '{{ hostname }}'
+  roles:
+    - role: packages
+      become: true
+    - role: symlink_dotfiles
+    - role: fonts
+      when: desktop
+    - role: shell
+    - role: tmux

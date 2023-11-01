@@ -1,0 +1,3 @@
+- name: Install Arch packages
+  ansible.builtin.import_tasks: arch.yaml
+  when: ansible_distribution == 'Arch Linux'

@@ -1,0 +1,13 @@
+- name: Clone dotfiles to home directory
+  # noqa: latest
+  ansible.builtin.git:
+    repo: '{{ symlink_dotfiles_repo }}'
+    dest: '{{ ansible_env.HOME }}/dotfiles'
+    clone: true
+    update: true
+    force: true
+
+- name: Stow dotfiles
+  ansible.builtin.command: stow -d {{ ansible_env.HOME }}/dotfiles -t {{ ansible_env.HOME }} home --adopt --verbose=2
+  register: result
+  changed_when: 'result.stderr is search("LINK: ")'

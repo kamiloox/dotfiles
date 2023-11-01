@@ -1,0 +1,32 @@
+- name: Obtain fish path
+  ansible.builtin.command: which fish
+  register: fish_path
+  changed_when: false
+
+- name: Setup fish as a default shell
+  become: true
+  ansible.builtin.user:
+    name: '{{ ansible_user_id }}'
+    shell: '{{ fish_path.stdout }}'
+    state: present
+
+- name: Create functions directory
+  ansible.builtin.file:
+    path: '{{ ansible_user_dir }}/.config/fish/functions'
+    state: directory
+    mode: '755'
+
+- name: Download fisher plugin manager
+  ansible.builtin.get_url:
+    url: https://git.io/fisher
+    dest: '{{ ansible_user_dir }}/.config/fish/functions/fisher.fish'
+    mode: '755'
+
+- name: Update fisher plugins
+  # noqa: command-instead-of-shell
+  become: false
+  ansible.builtin.shell: 'source {{ ansible_user_dir }}/.config/fish/functions/fisher.fish; fisher update'
+  register: fisher_update
+  changed_when: ('updated' in fisher_update.stdout|lower) or ('installed' in fisher_update.stdout|lower)
+  args:
+    executable: '{{ fish_path.stdout }}'

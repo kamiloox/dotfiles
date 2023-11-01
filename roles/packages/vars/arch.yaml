@@ -1,0 +1,11 @@
+packages_core:
+  - tmux
+  - git
+  - neovim
+  - fish
+  - stow
+  - fzf
+  - unzip
+
+packages_desktop:
+  - alacritty

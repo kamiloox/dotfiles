@@ -1,0 +1,5 @@
+- name: Fetch `Oh my tmux!` conf
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf
+    dest: '{{ ansible_user_dir }}/.config/tmux/tmux.conf'
+    mode: '755'

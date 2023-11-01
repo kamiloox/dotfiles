@@ -1,0 +1,9 @@
+- name: Include variables
+  ansible.builtin.include_vars: arch.yaml
+
+- name: Install with pacman '{{ packages_all }}'
+  community.general.pacman:
+    name: '{{ packages_all }}'
+    state: present
+  vars:
+    packages_all: '{{ packages_core + (packages_desktop if desktop else []) }}'

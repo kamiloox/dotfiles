@@ -1,0 +1,12 @@
+- name: Create fonts directory
+  ansible.builtin.file:
+    path: '{{ ansible_env.HOME }}/.fonts'
+    state: directory
+    mode: '755'
+
+- name: Download fonts
+  ansible.builtin.unarchive:
+    src: '{{ item }}'
+    dest: '{{ ansible_env.HOME }}/.fonts'
+    remote_src: true
+  with_items: '{{ fonts_sources }}'
